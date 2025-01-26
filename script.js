@@ -4,7 +4,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const taskInput = document.getElementById('task-input');
     const taskList = document.getElementById('task-list');
 
-    // Create the addTask Function
+    // Function to remove a task
+    function removeTask(event) {
+        const listItem = event.target.parentElement;
+        taskList.removeChild(listItem);
+    }
+
+    // Function to add a task
     function addTask() {
         const taskText = taskInput.value.trim();
         if (taskText === "") {
@@ -20,9 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const removeButton = document.createElement('button');
         removeButton.textContent = "Remove";
         removeButton.className = 'remove-btn';
-        removeButton.onclick = function () {
-            taskList.removeChild(listItem);
-        };
+        removeButton.onclick = removeTask;
 
         // Append the remove button and the task item to the task list
         listItem.appendChild(removeButton);
@@ -31,6 +35,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // Clear the input field
         taskInput.value = "";
     }
+
+    // Attach Event Listeners to existing tasks
+    document.querySelectorAll('.remove-btn').forEach(button => {
+        button.addEventListener('click', removeTask);
+    });
 
     // Attach Event Listeners
     addButton.addEventListener('click', addTask);
